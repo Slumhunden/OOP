@@ -12,7 +12,7 @@ async function initApp() {
   await buildResultsList();
   displayMembers(membersList);
   displayResults(resultsList);
-
+  // test
   // TODO: Make the rest of the program ...
 }
 
