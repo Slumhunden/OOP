@@ -29,16 +29,16 @@ export function constructResult(resultData) {
         this._member = memberObject;
       }
     },
-    get name(){
+    get name() {
       return this._name;
     },
-    set name(name){
+    set name(name) {
       this._name = name;
-    }
+    },
   };
   resultObject.time = resultData.time;
-  resultObject.member = getMemberById(resultData.memberId);
-  resultObject.name = resultObject.member.name;
+  // resultObject.member = getMemberById(resultData.memberId);
+  // resultObject.name = resultObject.member.name;
   Object.defineProperty(resultObject, "memberId", { writeable: false });
   return resultObject;
 }

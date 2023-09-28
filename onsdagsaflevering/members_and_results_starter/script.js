@@ -17,12 +17,12 @@ async function initApp() {
 }
 
 async function fetchMembers() {
-  const res = await fetch("./members.json");
+  const res = await fetch("./data/members.json");
   return await res.json();
 }
 
 async function fetchResults() {
-  const res = await fetch("./results.json");
+  const res = await fetch("./data/results.json");
   return await res.json();
 }
 
@@ -30,7 +30,7 @@ async function buildMembersList() {
   const originalObjects = await fetchMembers();
 
   for (const orgobj of originalObjects) {
-    const memberObj = constructMember(orgobj);
+    const memberObj = members.constructMember(orgobj);
     membersList.push(memberObj);
   }
 }
@@ -53,12 +53,14 @@ export function getMemberById(id) {
 function displayMembers(membersList) {
   const table = document.querySelector("table#members tbody");
   table.innerHTML = "";
-  for (const member of members) {
+  for (const member of membersList) {
     const html = /*html*/ `
     <tr>
       <td>${member.name}</td>
       <td>${member.active}</td>
-      <td>${member.birthday}</td>
+      <td>${member.birthday.toLocaleString("da-DK", {
+        dateStyle: "medium",
+      })}</td>
       <td>${member.age}</td>
       <td>${member.junior}</td>
       <td>${member.email}</td>
@@ -87,7 +89,7 @@ function displayResults(listOfResults) {
   }
 }
 function convertMemberIdToName(memberId) {
-  for (const member of members) {
+  for (const member of membersList) {
     if (memberId === member.id) {
       return member.name;
     }

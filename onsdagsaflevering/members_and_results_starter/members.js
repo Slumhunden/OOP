@@ -17,8 +17,9 @@ export function constructMember(memberdata) {
       return this._name;
     },
     set age(dateOfBirth) {
+      const dateOfBirthDate = new Date(dateOfBirth);
       const timeNow = Date.now();
-      const dateDifference = timeNow - dateOfBirth.getTime();
+      const dateDifference = timeNow - dateOfBirthDate.getTime();
       const age = dateDifference / (1000 * 60 * 60 * 24 * 365.25);
       this._age = Math.floor(age);
     },
@@ -26,12 +27,10 @@ export function constructMember(memberdata) {
       return this._age;
     },
     set birthday(dateOfBirth) {
-      this._birthday = new Intl.DateTimeFormat("da-dk", {
-        dateStyle: "medium",
-      }).format(dateOfBirth);
+      this._birthday = new Date(dateOfBirth);
     },
     get birthday() {
-      return this.birthday;
+      return this._birthday;
     },
     get junior() {
       if (this.age < 18) {
@@ -41,11 +40,11 @@ export function constructMember(memberdata) {
       }
     },
   };
-  MemberObject.name = `${memberdata.firstName} + " " + ${memberdata.lastName}`;
+  MemberObject.name = `${memberdata.firstName} ${memberdata.lastName}`;
   MemberObject.age = memberdata.dateOfBirth;
   MemberObject.birthday = memberdata.dateOfBirth;
-  Object.defineProperties(MemberObject, "id", { writeable: false });
-  Object.defineProperties(MemberObject, "name", { enumberable: false });
-  Object.defineProperties(MemberObject, "image", { enumberable: false });
+  Object.defineProperty(MemberObject, "id", { writeable: false });
+  Object.defineProperty(MemberObject, "name", { enumberable: false });
+  Object.defineProperty(MemberObject, "image", { enumberable: false });
   return MemberObject;
 }
